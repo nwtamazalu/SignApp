@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_save_after">
+        <observer name="sales_order_place_after_nwt_signapp" instance="NWT\Signapp\Observer\SalesOrderPlaceAfter" />
+    </event>
+    <event name="amasty_custom_form_submitted">
+        <observer name="amasty_custom_form_submitted_nwt_signapp" instance="NWT\Signapp\Observer\AmastyCustomFormSubmitted" />
+    </event>
+    <event name="nwt_signapp_sign_save">
+        <observer name="nwt_signapp_sign_save" instance="NWT\Signapp\Observer\SignComplete" />
+    </event>
+</config>

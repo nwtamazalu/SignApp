@@ -1,0 +1,50 @@
+{
+    "sign_applications": {
+        "column": {
+            "app_id": true,
+            "initiator": true,
+            "type": true,
+            "request": true,
+            "timeout": true,
+            "created_at": true,
+            "updated_at": true,
+            "extra_data": true,
+            "store_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SIGN_APPLICATIONS_APP_ID": true,
+            "SIGN_APPLICATIONS_TYPE_SIGN_APPLICATION_TYPES_TYPE_ID": true
+        }
+    },
+    "sign_signatures": {
+        "column": {
+            "sign_id": true,
+            "app_id": true,
+            "customer_id": true,
+            "signature": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SIGN_SIGNATURES_SIGN_ID": true,
+            "SIGN_SIGNATURES_APP_ID_SIGN_APPLICATIONS_APP_ID": true
+        }
+    },
+    "sign_application_types": {
+        "column": {
+            "type_id": true,
+            "name": true,
+            "sign_request_type": true,
+            "sign_request_type_id": true,
+            "extra_data": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "SIGN_APPLICATION_TYPES_TYPE_ID": true
+        }
+    }
+}

@@ -1,0 +1,184 @@
+<?php /* @var $block NWT\Signapp\Block\Customer\Apply */?>
+<?php
+    $request =  $block->getSignatureRequest();
+    $initiatorCustomer = $request->getInitiatorCustomer();
+?>
+
+<div class="requestdata">
+    <h3><?= __('Requested by') ?></h3>
+    <p>
+        <?php if ($initiatorCustomer): ?>
+            <?= $block->escapeHtml($initiatorCustomer->getName()) ?>
+        <?php else: ?>
+            <?= __('NOT FOUND') ?>
+        <?php endif; ?>
+    </p>
+
+    <h3><?= __('Requested by Email / SSN') ?></h3>
+    <p>
+        <?php if ($initiatorCustomer): ?>
+            <?= $block->escapeHtml($initiatorCustomer->getEmail()) ?> / <?= $block->escapeHtml($initiatorCustomer->getCustomAttribute('bankid_personalnumber')->getValue()) ?>
+        <?php else: ?>
+            <?= __('NOT FOUND') ?>
+        <?php endif; ?>
+    </p>
+
+    <?php foreach(json_decode($request->getRequest()) as $requestItem): ?>
+        <h3><?= __('Requested from') ?></h3>
+        <p>
+            <?php
+            if (
+                ($requestItem !== null && json_last_error() === JSON_ERROR_NONE)
+                && (isset($requestItem[0]) && $customer = $block->helper->getCustomerBySsn($requestItem[0]))
+            ):
+            ?>
+                <?= $block->escapeHtml($customer->getName()) ?>
+            <?php else: ?>
+                <?= __('NOT FOUND') ?>
+            <?php endif; ?>
+        </p>
+
+        <h3><?= __('Requested from Email / SSN') ?></h3>
+        <p>
+            <?php if ($requestItem !== null && json_last_error() === JSON_ERROR_NONE): ?>
+                <?= $block->escapeHtml($requestItem[1]) ?> / <?= $block->escapeHtml($requestItem[0]) ?>
+            <?php else: ?>
+                <?= __('NOT FOUND') ?>
+            <?php endif; ?>
+        </p>
+    <?php endforeach; ?>
+
+    <h3><?= __('Information') ?></h3>
+        <?php $data = (strlen($request->getData('extra_data')) > 0) ? json_decode($request->getData('extra_data'), true) : []; ?>
+        <?php if (count($data)): ?>
+        <table>
+            <?php foreach ($data as $key => $datum): ?>
+                <?php if (is_array($datum)): ?>
+                    <?php foreach ($datum as $dkey => $dval): ?>
+                        <tr>
+                            <td><strong><?= $block->escapeHtml($dval['label']) ?></strong></td>
+                            <td><?= $block->escapeHtml($dval['value']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                        <tr>
+                            <td><strong><?= $block->escapeHtml($key) ?></strong></td>
+                            <td><?= $block->escapeHtml($datum) ?></td>
+                        </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
+
+    <hr/>
+
+    <form action="<?= $block->escapeUrl($block->getUrl('sign/applications/sign')) ?>" method="POST" class="apply-form">
+
+        <?php if ($request->getInitiator() != $block->customerSession->getCustomerId()): ?>
+        <fieldset class="fieldset">
+            <div class="field fb-radio form-group field-radio-1620209162280 amform-layout-one">
+                <label for="VisaUppgifter" class="fb-radio-group-label label">
+                    Visande av personuppgifter på SKKs webbplatser <span class="required">*</span>
+                </label>
+                <div class="control">
+                    <div class="radio-group">
+                        <input value="Ja" type="radio" name="VisaUppgifter" class="amform-radio" required="" id="radio-1620209162280-0">
+                        <label for="radio-1620209162280-0" class="amform-versiontwo-label"><?= __('Yes') ?></label>
+                        <br>
+                        <input value="Nej" type="radio" name="VisaUppgifter" class="amform-radio" required="" id="radio-1620209162280-1">
+                        <label for="radio-1620209162280-1" class="amform-versiontwo-label"><?= __('No') ?></label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="field fb-radio form-group field-radio-1620209231586 amform-layout-one" data-dependency="Lansklubb">
+                <label for="Lansklubb" class="fb-radio-group-label label">
+                    Jag vill bli medlem i SKK länsklubb  <span class="required">*</span>
+                </label>
+                <div class="control">
+                    <div class="radio-group">
+                        <input value="Ja" type="radio" name="Lansklubb" class="amform-radio" style="default" required="" id="radio-1620209231586-0">
+                        <label for="radio-1620209231586-0" class="amform-versiontwo-label"><?= __('Yes') ?></label>
+                        <br>
+                        <input value="Nej" type="radio" name="Lansklubb" class="amform-radio" style="default" required="" id="radio-1620209231586-1">
+                        <label for="radio-1620209231586-1" class="amform-versiontwo-label"><?= __('No') ?></label>
+                        <br>
+                        <input value="Familjemedlem" type="radio" name="Lansklubb" class="amform-radio" style="default" required="" id="radio-1620209231586-2">
+                        <label for="radio-1620209231586-2" class="amform-versiontwo-label">Familjemedlem</label>
+                        <br>
+                        <input value="Medlem sen tidigare" type="radio" name="Lansklubb" class="amform-radio" style="default" required="" id="radio-1620209231586-3">
+                        <label for="radio-1620209231586-3" class="amform-versiontwo-label">Medlem sen tidigare</label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field fb-radio form-group field-radio-1620209301208 am-customform-depend amform-layout-one dependent" data-dependson="Lansklubb" style="display: none;">
+                <label for="Bilagan" class="fb-radio-group-label label">
+                    Tillsammans med medlemstidningen Hundsport vill jag få bilagan (välj en): <span class="required">*</span>
+                </label>
+                <div class="control">
+                    <div class="radio-group">
+                        <input value="Utställning" type="radio" name="Bilagan" class="amform-radio" style="default" dependency-field="Lansklubb" dependency-value="Ja" layout="one" parent-type="options" required="" id="Bilagan-0">
+                        <label for="Bilagan-0" class="amform-versiontwo-label">Utställning</label>
+                        <br>
+                        <input value="Jakthund" type="radio" name="Bilagan" class="amform-radio" style="default" dependency-field="Lansklubb" dependency-value="Ja" layout="one" parent-type="options" required="" id="Bilagan-1">
+                        <label for="Bilagan-1" class="amform-versiontwo-label">Jakthund</label>
+                        <br>
+                        <input value="Ingen" type="radio" name="Bilagan" class="amform-radio" style="default" dependency-field="Lansklubb" dependency-value="Ja" layout="one" parent-type="options" required="" id="Bilagan-2">
+                        <label for="Bilagan-2" class="amform-versiontwo-label">Ingen </label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field fb-text form-group field-textinput-1620209542678 am-customform-depend amform-layout-one dependent" data-dependson="Lansklubb" style="display: none;">
+                <label for="Familjemedlem" class="fb-text-label label">
+                    Jag vill bli familjemedlem i SKK länsklubb (ange medlemsnummer för huvudmedlem) <span class="required">*</span>
+                </label>
+                <div class="control">
+                    <input type="text" name="Familjemedlem" class="form-control" style="default" dependency-field="Lansklubb" dependency-value="Familjemedlem" layout="one" parent-type="input" required="" data-validate="{}" id="Familjemedlem">
+                </div>
+            </div>
+
+            <div class="field fb-radio form-group field-radio-1620209587997 amform-layout-one">
+                <label for="MedlemSpecialKl" class="fb-radio-group-label label">
+                    Jag vill bli medlem i SKK specialklubb <span class="required">*</span>
+                </label>
+                <div class="control">
+                    <div class="radio-group">
+                        <input value="Ja" type="radio" name="MedlemSpecialKl" class="amform-radio SKKAPI-MedlemSpecialKl" style="default" required="" id="MedlemSpecialKl-0">
+                        <label for="MedlemSpecialKl-0" class="amform-versiontwo-label">Ja</label>
+                        <br>
+                        <input value="Nej" type="radio" name="MedlemSpecialKl" class="amform-radio SKKAPI-MedlemSpecialKl" style="default" required="" id="MedlemSpecialKl-1">
+                        <label for="MedlemSpecialKl-1" class="amform-versiontwo-label">Nej</label>
+                        <br>
+                        <input value="Medlem sen tidigare" type="radio" name="MedlemSpecialKl" class="amform-radio SKKAPI-MedlemSpecialKl" style="default" required="" id="MedlemSpecialKl-2">
+                        <label for="MedlemSpecialKl-2" class="amform-versiontwo-label">Medlem sen tidigare</label>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "NWT_Signapp/js/apply": {}
+                }
+            }
+        </script>
+        <?php endif; ?>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action save primary" title="<?= __('Sign') ?>">
+                    <span><?= __('Sign') ?></span>
+                </button>
+            </div>
+        </div>
+        <input type="hidden" name="app_id" value="<?= $block->escapeHtmlAttr($request->getId()) ?>" />
+        <?= $block->getBlockHtml('formkey') ?>
+    </form>
+</div>
+

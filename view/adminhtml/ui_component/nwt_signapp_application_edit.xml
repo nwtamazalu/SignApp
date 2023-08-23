@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">nwt_signapp_application_edit_form.sign_applications</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">PDF Templates</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="NWT\Signapp\Block\Adminhtml\Pdf\Edit\SaveButton"/>
+            <button name="delete" class="NWT\Signapp\Block\Adminhtml\Pdf\Edit\PreviewButton"/>
+            <button name="back" class="Magento\Cms\Block\Adminhtml\Page\Edit\BackButton"/>
+        </buttons>
+        <namespace>nwt_signapp_application_edit_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>nwt_signapp_application_edit_form.sign_applications</dep>
+        </deps>
+    </settings>
+    <dataSource name="sign_applications">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="nwt_signapp/application/save"/>
+        </settings>
+        <dataProvider class="NWT\Signapp\Model\Pdf\DataProvider" name="sign_applications">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>app_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="app_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sign_applications</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>app_id</dataScope>
+            </settings>
+        </field>
+        <field name="title_code" sortOrder="20" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sign_applications</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Title Code</label>
+                <dataScope>title_code</dataScope>
+            </settings>
+        </field>
+        <field name="is_default" sortOrder="45" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sign_applications</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Is Default</label>
+                <dataScope>is_default</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <container name="assign_products_container">
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">NWT\Signapp\Block\Adminhtml\Info</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+</form>

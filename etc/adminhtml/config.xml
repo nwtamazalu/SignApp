@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <nwt_signapp>
+            <general>
+                <email_template>nwt_signapp_general_email_template</email_template>
+                <email_template_success>nwt_signapp_general_email_template_success</email_template_success>
+                <email_template_cancel>nwt_signapp_general_email_template_cancel</email_template_cancel>
+                <email_template_cancel_admin>nwt_signapp_general_email_template_cancel_admin</email_template_cancel_admin>
+                <email_template_complete>nwt_signapp_general_email_template_complete</email_template_complete>
+                <email_complete_admin_template>nwt_signapp_general_email_template_complete_admin</email_complete_admin_template>
+                <email_enabled>1</email_enabled>
+                <email_success_enabled>1</email_success_enabled>
+                <email_cancel_enabled>1</email_cancel_enabled>
+                <email_cancel_admin_enabled>1</email_cancel_admin_enabled>
+                <email_complete_email>1</email_complete_email>
+                <email_complete_admin_enabled>1</email_complete_admin_enabled>
+            </general>
+            <pdf>
+                <pdf_enabled>1</pdf_enabled>
+                <pdf_template>signature_blank.pdf</pdf_template>
+                <text_font>helvetica</text_font>
+            </pdf>
+        </nwt_signapp>
+    </default>
+</config>

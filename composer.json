@@ -1,0 +1,22 @@
+{
+    "name": "nwt/module-signapp",
+    "description": "NWT Signapp",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "George",
+            "email": "george@nordicwebteam.se"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "NWT\\Signapp\\": ""
+        }
+    }
+}

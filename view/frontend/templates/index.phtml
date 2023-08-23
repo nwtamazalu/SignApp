@@ -1,0 +1,127 @@
+<?php /* @var $block NWT\Signapp\Block\Customer\Applications */?>
+<?php
+    $applications = $block->getApplications();
+    $requests =  $block->getRequests();
+?>
+<div class="table-wrapper applications">
+    <table class="data table table-applications-items" id="my-applications-table">
+        <caption class="table-caption"><?= __('Signature Requests') ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><?= __('ID') ?></th>
+            <th scope="col" class="col name"><?= __('Requested Signature(s)') ?></th>
+            <th scope="col" class="col status"><?= __('Status') ?></th>
+            <th scope="col" class="col createat"><?= __('Created At') ?></th>
+            <th scope="col" class="col actions"><?= __('Actions') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (count($applications)): ?>
+            <?php foreach ($applications as $item): ?>
+                <tr>
+                    <td data-th="<?= __('ID') ?>" class="col id">
+                        <?= $item->getData('app_id') ?>
+                    </td>
+                    <td data-th="<?= __('Name') ?>" class="col name">
+                        <?php
+                            $req = json_decode($item->getData('request'));
+                            foreach ($req as $r) {
+                                echo '<p>' . $block->escapeHtml($r[0]) . ' : ' . $block->escapeHtml($r[1]) . '</p>';
+                            }
+                        ?>
+                    </td>
+                    <td data-th="<?= __('Status') ?>">
+                        <?php if (count($item->getSignatures()) == 2): ?>
+                            <p style="color: green"><?= __('Complete') ?></p>
+                        <?php else: ?>
+                            <?php if ($item->getSignatureForCustomer()): ?>
+                                <p style="color: orange"><?= __('Pending') ?></p>
+                            <?php else: ?>
+                                <a href="<?= $block->escapeUrl($block->getUrl('sign/applications/apply', ['id' => $item->getId()])) ?>"><?= __('Sign') ?></a>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
+                    <td data-th="<?= __('Created At') ?>" class="col title"><?= date('Y-m-d', strtotime($item->getData('created_at'))); ?></td>
+                    <td data-th="<?= __('Actions') ?> class="col actions">
+                        <?php if ($item->isLocked() && $item->getInitiator() == $this->currentCustomer->getId()): ?>
+                            <p class="error">Locked</p>
+                        <?php else: ?>
+                            <?php if (count($item->getSignatures()) < 2): ?>
+                               <p><a href="<?= $block->escapeUrl($block->getUrl('sign/sign/cancel', ['id' => $item->getId()])) ?>">
+                                    <?= ($this->currentCustomer->getEmail() == $item->getInitiatorCustomer()->getEmail()) ? __('Cancel') : __('Reject') ?>
+                                </a></p>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <td colspan="3"><?= __('We could not find any records') ?></td>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<h1 class="page-title"><span class="base" data-ui-id="page-title-wrapper"><?= __('My Pending Signature Requests') ?></span></h1>
+
+<div class="table-wrapper requests">
+    <table class="data table table-requests-items" id="my-requests-table">
+        <caption class="table-caption"><?= __('My Pending Signature Requests') ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><?= __('ID') ?></th>
+            <th scope="col" class="col name"><?= __('Requested By') ?></th>
+            <th scope="col" class="col data"><?= __('Information') ?></th>
+            <th scope="col" class="col createat"><?= __('Created At') ?></th>
+            <th scope="col" class="col actions"><?= __('Actions') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (count($requests)): ?>
+            <?php foreach ($requests as $item): ?>
+                <tr>
+                    <td data-th="<?= __('ID') ?>" class="col id">
+                        <?= $item->getData('app_id') ?>
+                    </td>
+                    <td data-th="<?= __('Name') ?>" class="col name">
+                        <p><?= $block->escapeHtml($item->getInitiatorCustomer()->getName()) ?></p>
+                        <p><?= $block->escapeHtml($item->getInitiatorCustomer()->getEmail()) ?></p>
+                        <p><?= $block->escapeHtml($item->getInitiatorCustomer()->getCustomAttribute('bankid_personalnumber')->getValue()) ?></p>
+                    </td>
+                    <td data-th="<?= __('Data') ?>">
+                        <?php $data = (strlen($item->getData('extra_data')) > 0) ? json_decode($item->getData('extra_data')) : []; ?>
+
+                        <?php foreach ($data as $key => $datum): // Non array values ?>
+                            <?php if (!is_array($datum) && !is_object($datum)): ?>
+                                <p><?= $block->escapeHtml($key) ?> : <?= $block->escapeHtml($datum) ?></p>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
+                        <?php if (isset($data->data)): // ['data'] is array ?>
+                            <?php foreach ($data->data as $datum): ?>
+                                <p><?= $block->escapeHtml($datum->label) ?> : <?= $block->escapeHtml($datum->value) ?></p>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </td>
+                    <td data-th="<?= __('Created At') ?>" class="col title"><?= date('Y-m-d', strtotime($item->getData('created_at'))); ?></td>
+                    <td data-th="<?= __('Actions') ?>">
+                        <?php if (count($item->getSignatures()) == 1): ?>
+                            <a href="<?= $block->escapeUrl($block->getUrl('sign/applications/apply', ['id' => $item->getId()])) ?>"><?= __('Sign') ?></a>
+                        <?php else: ?>
+                            <p style="color: green"><?= __('Complete') ?></p>
+                        <?php endif; ?>
+
+                        <?php if (count($item->getSignatures()) < 2): ?>
+                            <p><a href="<?= $block->escapeUrl($block->getUrl('sign/sign/cancel', ['id' => $item->getId()])) ?>">
+                                <?= ($this->currentCustomer->getEmail() == $item->getInitiatorCustomer()->getEmail()) ? __('Cancel') : __('Reject') ?>
+                            </a></p>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <td colspan="5"><?= __('We could not find any records') ?></td>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>

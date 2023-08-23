@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="NWT::Signapp" title="Signature Applications" module="NWT_Signapp" sortOrder="60" parent="NWT::base"
+             resource="NWT_Signapp::base"/>
+
+        <add id="NWT::Signapp_Index" title="Applications" module="NWT_Signapp" sortOrder="10"
+             parent="NWT::Signapp" action="nwt_signapp/index/index"
+             resource="NWT_Signapp::index"/>
+        <add id="NWT::Signapp_Type" title="Application Types" module="NWT_Signapp" sortOrder="20"
+             parent="NWT::Signapp" action="nwt_signapp/index/type"
+             resource="NWT_Signapp::type"/>
+    </menu>
+</config>

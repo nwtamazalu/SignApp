@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="nwt_signapp_general_email_template" label="Signature Email" file="signature.html" type="html" module="NWT_Signapp" area="frontend" />
+    <template id="nwt_signapp_general_email_template_success" label="Signature Email Success" file="success.html" type="html" module="NWT_Signapp" area="frontend" />
+    <template id="nwt_signapp_general_email_template_cancel" label="Signature Email Cancel" file="cancel.html" type="html" module="NWT_Signapp" area="frontend" />
+    <template id="nwt_signapp_general_email_template_cancel_admin" label="Signature Email Cancel (Admin)" file="cancel_admin.html" type="html" module="NWT_Signapp" area="frontend" />
+    <template id="nwt_signapp_general_email_template_complete" label="Signature Email Complete" file="complete.html" type="html" module="NWT_Signapp" area="frontend" />
+    <template id="nwt_signapp_general_email_template_complete_admin" label="Signature Email Complete (Admin)" file="complete_admin.html" type="html" module="NWT_Signapp" area="frontend" />
+</config>

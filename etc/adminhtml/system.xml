@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="nwt_signapp" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Signature Applications</label>
+            <tab>nwt</tab>
+            <resource>NWT_Signapp::general_config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="0">
+                <label>General</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Module Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="email_enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Notification Email Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="email_template" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Notification Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="email_success_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Success Email Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="email_template_success" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Success Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_success_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="email_complete_admin_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Send Copy Of Complete Email To Admin</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="email_admin_complete_address" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Copy Of Complete Email To Admin Address</label>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_complete_admin_enabled">1</field>
+                    </depends>
+                    <validate>required-entry validate-email</validate>
+                </field>
+                <field id="email_complete_admin_template" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Copy Of Complete Email To Admin Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_complete_admin_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+
+                <field id="email_cancel_enabled" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Cancel Email Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="email_template_cancel" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cancel Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_cancel_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="email_cancel_admin_enabled" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Cancel Email Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="email_cancel_admin_email" translate="label comment" sortOrder="90" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Cancel Email Address (Admin)</label>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_cancel_admin_enabled">1</field>
+                    </depends>
+                    <validate>validate-email required-entry</validate>
+                </field>
+                <field id="email_template_cancel_admin" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cancel Email Template (Admin)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_cancel_admin_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="email_complete_email" translate="label comment" sortOrder="90" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Cancel Email Address (Admin)</label>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_cancel_admin_enabled">1</field>
+                    </depends>
+                    <validate>validate-email required-entry</validate>
+                </field>
+                <field id="email_template_complete" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cancel Email Template (Admin)</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                        <field id="nwt_signapp/general/email_cancel_admin_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+            </group>
+            <group id="pdf" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="0">
+                <label>PDF Settings</label>
+
+
+                <field id="pdf_enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>PDF Generation Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="nwt_signapp/general/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="pdf_template" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="30" showInDefault="1" showInWebsite="1" >
+                    <label>PDF Template</label>
+                    <backend_model>NWT\Signapp\Model\Config\Backend\PdfType</backend_model>
+                    <upload_dir config="system" scope_info="1">signature_template</upload_dir>
+                    <depends>
+                        <field id="nwt_signapp/pdf/pdf_enabled">1</field>
+                    </depends>
+                    <validate>required-entry</validate>
+                </field>
+
+                <field id="text_font" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Font</label>
+                    <source_model>NWT\Signapp\Model\Config\Source\TextFont</source_model>
+                    <validate>required-entry</validate>
+                </field>
+
+            </group>
+        </section>
+    </system>
+</config>

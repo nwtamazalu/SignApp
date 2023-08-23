@@ -1,0 +1,21 @@
+<p>Please check your BankID application in order to continue.</p>
+<h2 style="color:red">KEEP THIS WINDOW OPEN UNTIL FINISHED</h2>
+
+<?php
+    $sigReq = $this->getSignatureRequest();
+    $sigReqInit = $sigReq->getInitiatorCustomer();
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "NWT_Signapp/js/sign": {
+                "id": "<?= $block->escapeJs($sigReq->getId()) ?>",
+                "initName": "<?= $block->escapeJs($sigReqInit->getName()) ?>",
+                "initEmail": "<?= $block->escapeJs($sigReqInit->getEmail()) ?>",
+                "initSsn": "<?= $block->escapeJs($sigReqInit->getCustomAttribute('bankid_personalnumber')->getValue()) ?>",
+                "request": <?= $block->escapeJs($sigReq->getRequest()) ?>,
+                "extra": <?= $block->escapeJs($sigReq->getExtraData()) ?>
+            }
+        }
+    }
+</script>

@@ -1,0 +1,32 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="NWT\Signapp\Api\TypeRepositoryInterface" type="NWT\Signapp\Model\TypeRepository" />
+    <preference for="NWT\Signapp\Api\ApplicationRepositoryInterface" type="NWT\Signapp\Model\ApplicationRepository" />
+    <preference for="NWT\Signapp\Api\SignatureRepositoryInterface" type="NWT\Signapp\Model\SignatureRepository" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="nwt_signapp_application_data_source" xsi:type="string">NWT\Signapp\Model\ResourceModel\Application\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="NWT\Signapp\Model\ResourceModel\Application\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">sign_applications</argument>
+            <argument name="resourceModel" xsi:type="string">NWT\Signapp\Model\ResourceModel\Application</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="nwt_signapp_type_data_source" xsi:type="string">NWT\Signapp\Model\ResourceModel\Type\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="NWT\Signapp\Model\ResourceModel\Type\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">sign_application_types</argument>
+            <argument name="resourceModel" xsi:type="string">NWT\Signapp\Model\ResourceModel\Type</argument>
+        </arguments>
+    </virtualType>
+</config>
